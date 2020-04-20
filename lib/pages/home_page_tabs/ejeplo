@@ -1,0 +1,88 @@
+     SizedBox(height: 10),
+                  Container(
+                      height: 120,
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Container(
+                            color: Colors.indigo,
+                            width: 120,
+                            height: 120,
+                            margin: EdgeInsets.all(5),
+                          );
+                        },
+                        itemCount: 10,
+                        scrollDirection: Axis.horizontal,
+                      )),
+                  SizedBox(height: 10),
+                  Container(
+                      height: 120,
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Container(
+                            color: Colors.indigo,
+                            width: 120,
+                            height: 120,
+                            margin: EdgeInsets.all(5),
+                          );
+                        },
+                        itemCount: 10,
+                        scrollDirection: Axis.horizontal,
+                      )),
+                  SizedBox(height: 10),
+                  Container(
+                      height: 120,
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Container(
+                            color: Colors.indigo,
+                            width: 120,
+                            height: 120,
+                            margin: EdgeInsets.all(5),
+                          );
+                        },
+                        itemCount: 10,
+                        scrollDirection: Axis.horizontal,
+                      )),
+                  /*  _isEnabled == true
+                  ? Cronometer(
+                      initTime: 0,
+                      fontSize: _fontSize,
+                    )
+                  : Container(),
+              SizedBox(height: 21),
+              MyBtn(
+                label: "My Post",
+                onPressed: () {
+                  Navigator.pushNamed(context, PostPage.routeName);
+                },
+                colorBtn: Color(0xffECF0F3),
+              ),
+                      CupertinoButton(
+                child: Text('enabled: $_isEnabled'),
+                color: Colors.cyan,
+                onPressed: () {
+                  setState(
+                    () {
+                      _isEnabled = !_isEnabled;
+                    },
+                  );
+                },
+              ),
+                     CupertinoButton(
+                            child: Text('Go to Chat'),
+                            color: Colors.cyan,
+                            onPressed: () {},
+                          ), 
+              SizedBox(height: 13),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(width: 50, height: 50, color: Colors.red),
+                    flex: 3,
+                  ),
+                  Expanded(
+                    child: Container(width: 50, height: 50, color: Colors.red[600]),
+                    flex: 2,
+                  ),
+                ],
+              )*/
