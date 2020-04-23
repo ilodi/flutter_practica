@@ -27,7 +27,7 @@ class AccountAPI {
   Future<List<dynamic>> getUsers(int page) async {
     final url = 'https://reqres.in/api';
     try {
-      final http.Response response = await http.get("$url/users?page=$page");
+      final http.Response response = await http.get("$url/users?page=$page&delay=3");
       print(response.body);
       if (response.statusCode == 200) {
         final parse = jsonDecode(response.body);
