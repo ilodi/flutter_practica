@@ -1,6 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nuts_activity_indicator/nuts_activity_indicator.dart';
 import 'package:practica/api/account_api.dart';
+import 'package:practica/api/youtube_api.dart';
+import 'package:practica/models/play_list.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PageA extends StatefulWidget {
@@ -14,7 +18,13 @@ class PageA extends StatefulWidget {
 class _PageAState extends State<PageA> {
 //Api
   AccountAPI _accountAPI = AccountAPI();
+
+  YouTubeApi _youTubeAPI =
+      YouTubeApi(apiKey: 'AIzaSyDmeDXnx8Q6Z0_mvVIr9J9s38EQT9wJwL0');
+
+  //
   List<dynamic> _users = [];
+  List<PlayList> _playList = [];
   bool _isLoading = true;
   @override
   void initState() {
@@ -24,8 +34,11 @@ class _PageAState extends State<PageA> {
 
   _load() async {
     final user = await _accountAPI.getUsers(1);
+    final List<PlayList> playList =
+        await _youTubeAPI.getPlayList("UCwXdFgeE9KYzlDdR7TG9cMw");
     setState(() {
       _users.addAll(user);
+      _playList.addAll(playList);
       _isLoading = false;
     });
   }
@@ -36,7 +49,7 @@ class _PageAState extends State<PageA> {
       child: ListView.builder(
         itemBuilder: (_, index) {
           return Shimmer(
-            period: Duration(seconds: 3),
+              period: Duration(seconds: 3),
               child: Padding(
                 padding: EdgeInsets.all(8),
                 child: Column(
@@ -50,11 +63,11 @@ class _PageAState extends State<PageA> {
                       ),
                     ),
                     SizedBox(height: 3),
-                  
                   ],
                 ),
               ),
-              gradient: LinearGradient(colors: [Colors.white, Color(0xfff0f0f0)]));
+              gradient:
+                  LinearGradient(colors: [Colors.white, Color(0xffeeeeee)]));
         },
         itemCount: 7,
         scrollDirection: Axis.horizontal,
@@ -70,29 +83,47 @@ class _PageAState extends State<PageA> {
       children: <Widget>[
         _isLoading
             ? _shimmer()
-            : Container(
-                height: 120,
-                child: ListView.builder(
-                  itemBuilder: (_, index) {
-                    final dynamic item = _users[index];
-                    return Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Column(children: <Widget>[
-                        Expanded(
-                          child: ClipOval(
-                            child: Image.network(
-                              item['avatar'],
-                            ),
+            : Column(
+                children: <Widget>[
+                  Container(
+                    height: 120,
+                    child: ListView.builder(
+                      itemBuilder: (_, index) {
+                        final dynamic item = _users[index];
+                        return Padding(
+                          padding: EdgeInsets.all(8),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(minHeight: 70),
+                            child: Column(children: <Widget>[
+                              Expanded(
+                                child: ClipOval(
+                                  child: CachedNetworkImage(
+                                    imageUrl: item['avatar'],
+                                    placeholder: (_, __) => Center(
+                                      child: NutsActivityIndicator(
+                                        radius: 55,
+                                        activeColor: Colors.cyan,
+                                        inactiveColor: Colors.cyanAccent,
+                                        tickCount: 3,
+                                        startRatio: 0.64,
+                                        animationDuration: Duration(seconds: 1),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(item['first_name']),
+                            ]),
                           ),
-                        ),
-                        Text(item['first_name']),
-                      ]),
-                    );
-                  },
-                  itemCount: _users.length,
-                  scrollDirection: Axis.horizontal,
-                ),
-              ),
+                        );
+                      },
+                      itemCount: _users.length,
+                      scrollDirection: Axis.horizontal,
+                    ),
+                  ),
+                  Text(_playList.length.toString()),
+                ],
+              )
       ],
     );
   }

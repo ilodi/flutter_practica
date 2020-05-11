@@ -7,7 +7,8 @@ class BottomMenuItem {
   final Widget content;
 
 //llaves es para ser que sean opcionales
-  BottomMenuItem( {@required this.iconPath, @required this.label, @required this.content});
+  BottomMenuItem(
+      {@required this.iconPath, @required this.label, @required this.content});
 }
 
 class BottomMenu extends StatelessWidget {
@@ -15,12 +16,12 @@ class BottomMenu extends StatelessWidget {
   final int currentPage;
   final void Function(int) onChanged;
 //como es final debe de de tener un constructor, para inicializar sus valores
-  BottomMenu({@required this.items,@required this.currentPage, this.onChanged})
-      : assert(items != null && items.length > 0), assert(currentPage!=null && currentPage >= 0);
+  BottomMenu({@required this.items, @required this.currentPage, this.onChanged})
+      : assert(items != null && items.length > 0),
+        assert(currentPage != null && currentPage >= 0);
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       color: Color(0xfff7f7f7),
       padding: EdgeInsets.symmetric(vertical: 13),
@@ -34,7 +35,6 @@ class BottomMenu extends StatelessWidget {
             final bool isActive = index == currentPage;
             return Expanded(
               child: Container(
-                
                 child: CupertinoButton(
                   onPressed: () {
                     onChanged(index);
@@ -43,11 +43,14 @@ class BottomMenu extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      SvgPicture.asset(item.iconPath, width: 55, color: isActive ? Colors.blue : null),
+                      SvgPicture.asset(item.iconPath,
+                          width: 30, color: isActive ? Colors.blue : null),
                       SizedBox(height: 3),
                       Text(
                         item.label,
-                        style: TextStyle(fontSize: 12, color: isActive ? Colors.black38 : Colors.white10),
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: isActive ? Colors.black38 : Colors.white10),
                       ),
                     ],
                   ),
