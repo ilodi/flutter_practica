@@ -5,6 +5,7 @@ import 'package:nuts_activity_indicator/nuts_activity_indicator.dart';
 import 'package:practica/api/account_api.dart';
 import 'package:practica/api/youtube_api.dart';
 import 'package:practica/models/play_list.dart';
+import 'package:practica/pages/home_page_widgets/top_play_lists.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PageA extends StatefulWidget {
@@ -121,7 +122,7 @@ class _PageAState extends State<PageA> {
                       scrollDirection: Axis.horizontal,
                     ),
                   ),
-                  Text(_playList.length.toString()),
+                  TopPlayLists(items: _playList),
                 ],
               )
       ],

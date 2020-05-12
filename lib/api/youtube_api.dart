@@ -37,7 +37,6 @@ class YouTubeApi {
         return items;
       } else {
         return [];
-        print('error ');
       }
     } catch (e) {
       print(e);
