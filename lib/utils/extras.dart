@@ -30,7 +30,7 @@ class Extras {
     } else if (mins > 60 * 23 && mins < 60 * 24 * 4) {
       return "Hace ${(mins / (60 * 24)).ceil()} Días";
     } else {
-      return "${date.day} / ${monthText(date.month)} / ${date.year}";
+      return "${date.day < 10 ? '0' : ''}${date.day} / ${monthText(date.month)} / ${date.year}";
     }
   }
 }
