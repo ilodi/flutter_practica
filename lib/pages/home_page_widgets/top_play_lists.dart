@@ -14,8 +14,11 @@ class TopPlayLists extends StatefulWidget {
 }
 
 class _TopPlayListsState extends State<TopPlayLists> {
+  ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
+
   @override
   Widget build(BuildContext context) {
+    print('Build TopPlayList');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -29,6 +32,9 @@ class _TopPlayListsState extends State<TopPlayLists> {
           aspectRatio: 8 / 5,
           child: Container(
             child: PageView(
+              onPageChanged: (int page) {
+                _currentPage.value = page;
+              },
               children: List.generate(
                 widget.items.length,
                 (int index) {
@@ -51,27 +57,32 @@ class _TopPlayListsState extends State<TopPlayLists> {
                         Padding(
                           padding: EdgeInsets.all(10),
                           child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(item.title,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(item.title,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500)),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    Extras.fromNow(item.publishedAt),
                                     style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500)),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(Extras.fromNow(item.publishedAt),
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w300)),
-                                    Text("Videos ${item.itemCount}",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w300))
-                                  ],
-                                )
-                              ]),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  Text(
+                                    "Videos ${item.itemCount}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -81,7 +92,41 @@ class _TopPlayListsState extends State<TopPlayLists> {
             ),
           ),
         ),
+        ValueListenableBuilder(
+          valueListenable: _currentPage,
+          builder: (BuildContext context, value, w) {
+            return Dots(count: widget.items.length, currentPage: value);
+          },
+        ),
       ],
+    );
+  }
+}
+
+class Dots extends StatelessWidget {
+  final int count, currentPage;
+  const Dots({Key key, @required this.count, @required this.currentPage})
+      : assert(count != null && count > 0),
+        assert(currentPage != null && currentPage >= 0),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        count,
+        (index) {
+          return Container(
+            width: 10,
+            height: 10,
+            margin: EdgeInsets.symmetric(horizontal: 5),
+            decoration: BoxDecoration(
+                color: currentPage == index ? Colors.black : Colors.black12,
+                shape: BoxShape.circle),
+          );
+        },
+      ),
     );
   }
 }
