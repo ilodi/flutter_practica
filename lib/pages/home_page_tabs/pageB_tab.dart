@@ -11,16 +11,15 @@ class PageB extends StatefulWidget {
 class _PageBState extends State<PageB> {
   @override
   Widget build(BuildContext context) {
-    //que calcule el espacio que tiene para renderizar
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constaints) {
-        return Container(
+    return AspectRatio(
+        //el primer valor es el ancho y el segundo el alto
+        aspectRatio: 7 / 4,
+        child: Container(
           color: Colors.red,
-          height: constaints.maxHeight/3,
-
-          
-        );
-      },
-    );
+          child: Image.network(
+              'https://images7.alphacoders.com/103/1030536.jpg',
+                fit: BoxFit.cover,
+              ),
+        ));
   }
 }
