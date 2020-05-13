@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:practica/models/play_list.dart';
 import 'package:practica/utils/extras.dart';
@@ -14,7 +15,21 @@ class TopPlayLists extends StatefulWidget {
 }
 
 class _TopPlayListsState extends State<TopPlayLists> {
+  PageController _controller =
+      PageController(initialPage: 0, viewportFraction: 0.5);
   ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +47,7 @@ class _TopPlayListsState extends State<TopPlayLists> {
           aspectRatio: 8 / 5,
           child: Container(
             child: PageView(
+              controller: _controller,
               onPageChanged: (int page) {
                 _currentPage.value = page;
               },
@@ -92,9 +108,21 @@ class _TopPlayListsState extends State<TopPlayLists> {
             ),
           ),
         ),
+        CupertinoButton(
+            child: Text('Prev page'),
+            onPressed: () {
+              _controller.previousPage(
+                  duration: Duration(milliseconds: 500), curve: Curves.easeInQuad);
+            }),
+            CupertinoButton(
+            child: Text('Next page'),
+            onPressed: () {
+              _controller.nextPage(
+                  duration: Duration(milliseconds: 500), curve: Curves.easeInQuad);
+            }),
         ValueListenableBuilder(
           valueListenable: _currentPage,
-          builder: (BuildContext context, value, w) {
+          builder: (BuildContext context, int value, w) {
             return Dots(count: widget.items.length, currentPage: value);
           },
         ),
