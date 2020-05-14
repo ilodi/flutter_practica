@@ -5,6 +5,7 @@ import 'package:nuts_activity_indicator/nuts_activity_indicator.dart';
 import 'package:practica/api/account_api.dart';
 import 'package:practica/api/youtube_api.dart';
 import 'package:practica/models/play_list.dart';
+import 'package:practica/models/youtube_video.dart';
 import 'package:practica/pages/home_page_widgets/top_play_lists.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -26,6 +27,7 @@ class _PageAState extends State<PageA> {
   //
   List<dynamic> _users = [];
   List<PlayList> _playList = [];
+  List<YouTubeVideo> _newVideos = [];
   bool _isLoading = true;
   @override
   void initState() {
@@ -37,9 +39,12 @@ class _PageAState extends State<PageA> {
     final user = await _accountAPI.getUsers(1);
     final List<PlayList> playList =
         await _youTubeAPI.getPlayList("UCwXdFgeE9KYzlDdR7TG9cMw");
+    final List<YouTubeVideo> newVideos =
+        await _youTubeAPI.getNewVideos("UCwXdFgeE9KYzlDdR7TG9cMw");
     setState(() {
       _users.addAll(user);
       _playList.addAll(playList);
+      _newVideos.addAll(newVideos);
       _isLoading = false;
     });
   }
@@ -123,6 +128,7 @@ class _PageAState extends State<PageA> {
                     ),
                   ),
                   TopPlayLists(items: _playList),
+                  Text("New Vidoes ${_newVideos.length}"),
                 ],
               )
       ],
