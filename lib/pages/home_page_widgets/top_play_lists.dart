@@ -39,11 +39,12 @@ class _TopPlayListsState extends State<TopPlayLists> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-            padding: EdgeInsets.only(top: 20, left: 10, bottom: 10),
-            child: Text(
-              "Para Flutter Devs",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-            )),
+          padding: EdgeInsets.only(top: 20, left: 10, bottom: 10),
+          child: Text(
+            "Para Flutter Devs",
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+          ),
+        ),
         AspectRatio(
           aspectRatio: 7 / 4,
           child: Container(
@@ -68,7 +69,7 @@ class _TopPlayListsState extends State<TopPlayLists> {
                     return Container(
                       width: itemWidth,
                       padding: EdgeInsets.symmetric(horizontal: 4),
-                      margin: EdgeInsets.only(bottom: 21),
+                      margin: EdgeInsets.only(bottom: 15),
                       //margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
                       decoration:
                           BoxDecoration(color: Colors.white, boxShadow: [
@@ -123,7 +124,7 @@ class _TopPlayListsState extends State<TopPlayLists> {
             ),
           ),
         ),
-       /*  CupertinoButton(
+        /*  CupertinoButton(
             child: Text('Prev page'),
             onPressed: () {
              
@@ -159,20 +160,23 @@ class Dots extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        count,
-        (index) {
-          return Container(
-            width: 10,
-            height: 10,
-            margin: EdgeInsets.symmetric(horizontal: 5),
-            decoration: BoxDecoration(
-                color: currentPage == index ? Colors.black : Colors.black12,
-                shape: BoxShape.circle),
-          );
-        },
+    return Container(
+      padding: EdgeInsets.only(left: 10, bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: List.generate(
+          count,
+          (index) {
+            return Container(
+              width: 10,
+              height: 10,
+              margin: EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                  color: currentPage == index ? Colors.black : Colors.black12,
+                  shape: BoxShape.circle),
+            );
+          },
+        ),
       ),
     );
   }
