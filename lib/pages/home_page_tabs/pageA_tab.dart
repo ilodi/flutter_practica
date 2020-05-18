@@ -56,7 +56,7 @@ class _PageAState extends State<PageA> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        !_isLoading
+        _isLoading
             ? HomeTabShimmer()
             : Column(
                 children: <Widget>[

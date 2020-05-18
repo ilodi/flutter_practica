@@ -39,12 +39,15 @@ class HomeTabShimmer extends StatelessWidget {
             scrollDirection: Axis.horizontal,
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 20, left: 10, bottom: 10),
-          child: Text(
-            "Para Flutter Devs",
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+        Shimmer.fromColors(
+          child: Container(
+            margin: EdgeInsets.only(left: 15, bottom: 10),
+            width: 200,
+            height: 15,
+            color: Colors.white,
           ),
+          baseColor: Color(0xfff0f0f0),
+          highlightColor: Color(0xffcccccc),
         ),
         AspectRatio(
           aspectRatio: 7 / 4,
@@ -74,8 +77,8 @@ class HomeTabShimmer extends StatelessWidget {
                             child: Container(
                               color: Color(0xffcccccc),
                             ),
-                            baseColor: Color(0xffcccccc),
-                            highlightColor: Color(0xffaaaaaa),
+                            baseColor: Color(0xfff0f0f0),
+                            highlightColor: Color(0xffcccccc),
                           ),
                         ),
                         Padding(
@@ -113,6 +116,81 @@ class HomeTabShimmer extends StatelessWidget {
             ),
           ),
         ),
+        Shimmer.fromColors(
+          child: Container(
+            margin: EdgeInsets.only(left: 10),
+            width: 200,
+            height: 15,
+            color: Colors.white,
+          ),
+          baseColor: Color(0xfff0f0f0),
+          highlightColor: Color(0xffcccccc),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(
+            6,
+            (index) {
+              return AspectRatio(
+                aspectRatio: 12 / 3,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    BoxShadow(color: Colors.black12, blurRadius: 10)
+                  ]),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                          flex: 2,
+                          child: Shimmer.fromColors(
+                            baseColor: Color(0xfff0f0f0),
+                            highlightColor: Color(0xffcccccc),
+                            child: Container(
+                              color: Color(0xffeeeeee),
+                            ),
+                          )),
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Shimmer.fromColors(
+                                baseColor: Color(0xfff0f0f0),
+                                highlightColor: Color(0xffcccccc),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 12,
+                                  color: Color(0xffeeeeee),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Shimmer.fromColors(
+                                baseColor: Color(0xfff0f0f0),
+                                highlightColor: Color(0xffcccccc),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 20,
+                                  color: Color(0xffeeeeee),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        )
       ],
     );
   }
