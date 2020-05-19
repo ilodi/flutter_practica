@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nuts_activity_indicator/nuts_activity_indicator.dart';
-import 'package:practica/api/account_api.dart';
-import 'package:practica/pages/home_page.dart';
-import 'package:practica/utils/dialog.dart';
+import 'package:practica/widgets/login_text_form_field.dart';
 import 'package:practica/widgets/my_btn.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../blocs/pages/Login/bloc.dart';
 
 class LoginPage extends StatefulWidget {
@@ -97,58 +94,29 @@ class _LoginPageState extends State<LoginPage> {
                           key: _formKey,
                           child: Column(
                             children: <Widget>[
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  //es como un placeholder
-                                  hintText: "email@email.com",
-                                  labelText: "email",
-                                  prefixIcon: Container(
-                                    width: 70,
-                                    height: 40,
-                                    padding: EdgeInsets.all(10),
-                                    child: SvgPicture.asset(
-                                      'assets/icons/mail.svg',
-                                      color: Colors.black26,
-                                    ),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(34),
-                                  ),
-                                ),
+                              LoginTextFormField(
+                                iconPath: 'assets/icons/mail.svg',
+                                hintText: "email@email.com",
+                                labelText: "email",
                                 initialValue: 'eve.holt@reqres.in',
-                                keyboardType: TextInputType.emailAddress,
-                                textInputAction: TextInputAction.next,
                                 validator: _validateEmail,
                                 onFieldSubmitted: (String text) {
                                   _focusNodePassword.nextFocus();
                                 },
                               ),
                               SizedBox(height: 20),
-                              TextFormField(
-                                  decoration: InputDecoration(
-                                    hintText: "******",
-                                    labelText: "password",
-                                    prefixIcon: Container(
-                                      width: 70,
-                                      height: 40,
-                                      padding: EdgeInsets.all(10),
-                                      child: SvgPicture.asset(
-                                        'assets/icons/password.svg',
-                                        color: Colors.black26,
-                                      ),
-                                    ),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(34)),
-                                  ),
-                                  initialValue: 'cityslicka',
-                                  focusNode: _focusNodePassword,
-                                  textInputAction: TextInputAction.send,
-                                  validator: _validatePassword,
-                                  onFieldSubmitted: (String text) {
-                                    _submit();
-                                  },
-                                  obscureText: true),
+                              LoginTextFormField(
+                                 iconPath:'assets/icons/password.svg',
+                                hintText: "******",
+                                labelText: "password",
+                                initialValue: 'cityslicka',
+                                validator: _validateEmail,
+                                obscureText:true,
+                                focusNode: _focusNodePassword,
+                                onFieldSubmitted: (String text) {
+                                  _submit();
+                                },
+                              ),
                               SizedBox(height: 5),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
