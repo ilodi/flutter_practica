@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:practica/blocs/pages/master_bloc/master_bloc.dart';
+import 'package:practica/blocs/pages/master_bloc/master_events.dart';
+import 'package:practica/blocs/pages/master_bloc/master_state.dart';
 import 'package:practica/pages/chat_page.dart';
 import 'package:practica/pages/images_page.dart';
 import 'package:practica/widgets/bottom_menu.dart';
@@ -18,8 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentPage = 0;
-
   final _menu = [
     BottomMenuItem(
         content: PageA(),
@@ -48,6 +50,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<MasterBloc>(context);
     return Scaffold(
       /*   appBar: AppBar(
         brightness: Brightness.light ,
@@ -62,18 +65,18 @@ class _HomePageState extends State<HomePage> {
           IconButton(icon: Icon(Icons.search), onPressed: () {}),
         ],
       ), */
-      bottomNavigationBar: BottomMenu(
-        currentPage: _currentPage,
-        onChanged: (int newCurrentPage) {
-          setState(() {
-            _currentPage = newCurrentPage;
-            //.conatins va a decir si el elemento existe
-            /*    if (!_renderedTabs.contains(newCurrentPage)) {
-              _renderedTabs.add(newCurrentPage);
-            } */
-          });
+      bottomNavigationBar: BlocBuilder<MasterBloc, MasterState>(
+        builder: (_, state) {
+          return BottomMenu(
+            currentPage: state.currenTab,
+            onChanged: (int newCurrentPage) {
+              bloc.add(MasterSetTap(newCurrentPage));
+            },
+            items: _menu,
+          );
         },
-        items: _menu,
+        condition: (prevState, newState) =>
+            prevState.currenTab != newState.currenTab,
       ),
       body: SafeArea(
         child: Container(
@@ -103,10 +106,18 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               Expanded(
-                  child: MyPageView(
-                children: _menu.map<Widget>((item) => item.content).toList(),
-                currentPage: _currentPage,
-              )),
+                child: BlocBuilder<MasterBloc, MasterState>(
+                  builder: (_, state) {
+                    return MyPageView(
+                      children:
+                          _menu.map<Widget>((item) => item.content).toList(),
+                      currentPage: state.currenTab,
+                    );
+                  },
+                  condition: (prevState, newState) =>
+                      prevState.currenTab != newState.currenTab,
+                ),
+              ),
             ],
           ),
         ),

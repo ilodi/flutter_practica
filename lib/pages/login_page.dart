@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nuts_activity_indicator/nuts_activity_indicator.dart';
 import 'package:practica/widgets/login_text_form_field.dart';
 import 'package:practica/widgets/my_btn.dart';
@@ -110,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                                 hintText: "******",
                                 labelText: "password",
                                 initialValue: 'cityslicka',
-                                validator: _validateEmail,
+                                validator: _validatePassword,
                                 obscureText:true,
                                 focusNode: _focusNodePassword,
                                 onFieldSubmitted: (String text) {

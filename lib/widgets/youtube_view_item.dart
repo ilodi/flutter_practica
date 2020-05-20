@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:practica/blocs/pages/master_bloc/master_bloc.dart';
+import 'package:practica/blocs/pages/master_bloc/master_events.dart';
 import 'package:practica/models/youtube_video.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 
@@ -13,6 +16,7 @@ class YouTubeVideoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final masterBloc = BlocProvider.of<MasterBloc>(context);
     return CupertinoButton(
         child: AspectRatio(
           aspectRatio: 12 / 3,
@@ -62,6 +66,7 @@ class YouTubeVideoItem extends StatelessWidget {
         ),
         padding: EdgeInsets.zero,
         onPressed: () {
+          masterBloc.add(MasterAddHistory(item));
           FlutterYoutube.playYoutubeVideoByUrl(
               apiKey: "AIzaSyDmeDXnx8Q6Z0_mvVIr9J9s38EQT9wJwL0",
               videoUrl: "https://www.youtube.com/watch?v=${item.videoID}",
