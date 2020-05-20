@@ -17,27 +17,31 @@ class PageB extends StatefulWidget {
 class _PageBState extends State<PageB> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MasterBloc, MasterState>(builder: (_, state) {
-      if (state.history.length == 0) {
-        return Center(
-            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          SvgPicture.asset(
-            'assets/icons/envio-y-entrega.svg',
-            width: 80,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text("No hay datos para mostrar")
-        ]));
-      }
-      return ListView.builder(
-        itemBuilder: (_, index) {
-          final YouTubeVideo item = state.history[index];
-          return YouTubeVideoItem(item: item);
+    return BlocBuilder<MasterBloc, MasterState>(
+        builder: (_, state) {
+          if (state.history.length == 0) {
+            return Center(
+                child:
+                    Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              SvgPicture.asset(
+                'assets/icons/envio-y-entrega.svg',
+                width: 80,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text("No hay datos para mostrar")
+            ]));
+          }
+          return ListView.builder(
+            itemBuilder: (_, index) {
+              final YouTubeVideo item = state.history[index];
+              return YouTubeVideoItem(item: item);
+            },
+            itemCount: state.history.length,
+          );
         },
-        itemCount: state.history.length,
-      );
-    });
+        condition: (prevState, newState) =>
+            prevState.history.length != newState.history.length);
   }
 }
