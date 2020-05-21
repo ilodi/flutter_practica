@@ -8,8 +8,19 @@ class MasterSetTap extends MasterEvents {
   MasterSetTap(this.tab);
 }
 
-class MasterAddHistory extends MasterEvents{
+class MasterAddHistory extends MasterEvents {
   final YouTubeVideo youTubeVideo;
 
   MasterAddHistory(this.youTubeVideo);
+}
+
+class MasterRemoveFromHistory extends MasterEvents {
+  final int index;
+  MasterRemoveFromHistory(this.index);
+}
+
+
+
+class MasterLogOut extends MasterEvents {
+
 }

@@ -8,15 +8,15 @@ import 'package:practica/models/youtube_video.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 
 class YouTubeVideoItem extends StatelessWidget {
+  final VoidCallback onDismissed;
   final YouTubeVideo item;
 
-  const YouTubeVideoItem({Key key, @required this.item})
+  const YouTubeVideoItem({Key key, @required this.item, this.onDismissed})
       : assert(item != null),
         super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    final masterBloc = BlocProvider.of<MasterBloc>(context);
+//funcion que retorna el widget dependiendo
+  Widget _getView(MasterBloc masterBloc) {
     return CupertinoButton(
         child: AspectRatio(
           aspectRatio: 12 / 3,
@@ -44,7 +44,10 @@ class YouTubeVideoItem extends StatelessWidget {
                         Text(
                           item.title,
                           maxLines: 2,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black12),
                         ),
                         SizedBox(
                           height: 5,
@@ -53,7 +56,10 @@ class YouTubeVideoItem extends StatelessWidget {
                           child: Text(
                             item.description,
                             overflow: TextOverflow.fade,
-                            style: TextStyle(fontWeight: FontWeight.w300),
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black12),
                           ),
                         ),
                       ],
@@ -74,5 +80,22 @@ class YouTubeVideoItem extends StatelessWidget {
               fullScreen: true //default false
               );
         });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final masterBloc = BlocProvider.of<MasterBloc>(context);
+
+    if (onDismissed != null) {
+      return Dismissible(
+          key: Key(item.videoID),
+          onDismissed: (_) {
+            if (onDismissed != null) {
+              onDismissed();
+            }
+          },
+          child: _getView(masterBloc));
+    }
+    return _getView(masterBloc);
   }
 }

@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:practica/blocs/pages/master_bloc/master_bloc.dart';
+import 'package:practica/blocs/pages/master_bloc/master_events.dart';
 import 'package:practica/pages/login_page.dart';
 import 'package:practica/utils/dialog.dart';
 import 'package:practica/widgets/avatar.dart';
 import 'package:practica/widgets/left_right_icon_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PageC extends StatefulWidget {
-  PageC({Key key}) : super(key: key);
-
-  @override
-  _PageCState createState() => _PageCState();
-}
-
-class _PageCState extends State<PageC> {
-  _logOut() async {
+class PageC extends StatelessWidget {
+  _logOut(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     //Borrar todo el historil de nav, este borrar todo hasta llegar a la nueva pagina
@@ -24,7 +20,7 @@ class _PageCState extends State<PageC> {
         context, LoginPage.routeName, (_) => false);
   }
 
-  _confirm() async {
+  _confirm(BuildContext context, MasterBloc masterBloc) async {
     //como es un metodo statico no necesita  crear una instancia
     final isOk = await Dialogs.confirm(
       context,
@@ -33,22 +29,21 @@ class _PageCState extends State<PageC> {
     );
 
     if (isOk) {
-      _logOut();
+      masterBloc.add(MasterLogOut());
+      _logOut(context);
     }
   }
 
-  _setEmail() {
+  _setEmail(BuildContext context) {
     Dialogs.intputEmail(context, onOk: (String text) {
       print('inputdialog $text');
-    }, label: 'Ingrese un email',
-    placeholder:'email@email.com');
+    }, label: 'Ingrese un email', placeholder: 'email@email.com');
   }
 
   @override
   Widget build(BuildContext context) {
-    /*   return Center(
-      child: CupertinoButton(child: Text("Cerra sesión"), onPressed: _logOut),
-    ); */
+    final MasterBloc bloc = BlocProvider.of<MasterBloc>(context);
+
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -80,14 +75,14 @@ class _PageCState extends State<PageC> {
                       style: TextStyle(
                           color: Color(0xFFaaaaaa), fontFamily: 'Montserrat'),
                     ),
-                    onPressed: _setEmail,
+                    onPressed: () => _setEmail(context),
                   ),
                   LeftRightIconButton(
                     label: 'Configuraciones de privacidad',
                     leftIcon: 'assets/icons/security.svg',
                     rightContent:
                         SvgPicture.asset('assets/icons/right.svg', width: 20),
-                    onPressed: _confirm,
+                    onPressed: () => _setEmail(context),
                   ),
                   LeftRightIconButton(
                     label: 'Notificaciones Push',
@@ -95,12 +90,12 @@ class _PageCState extends State<PageC> {
                     rightContent: Text('ACTIVADO',
                         style: TextStyle(
                             color: Color(0xFFaaaaaa), letterSpacing: 0.5)),
-                    onPressed: _confirm,
+                    onPressed: () => _setEmail(context),
                   ),
                   LeftRightIconButton(
                     label: 'Cerrar sesión',
                     leftIcon: 'assets/icons/logout.svg',
-                    onPressed: _confirm,
+                    onPressed: () => _confirm(context, bloc),
                   ),
                 ],
               ),

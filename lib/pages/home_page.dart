@@ -52,19 +52,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<MasterBloc>(context);
     return Scaffold(
-      /*   appBar: AppBar(
-        brightness: Brightness.light ,
-        backgroundColor: Color(0xfff7f7f7),
-        elevation: 0,
-        title: Text('Logo', style: TextStyle(color: Colors.cyanAccent),),
-        
-        iconTheme: IconThemeData(color:Colors.cyan),
-        leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.more), onPressed: () {}),
-          IconButton(icon: Icon(Icons.search), onPressed: () {}),
-        ],
-      ), */
       bottomNavigationBar: BlocBuilder<MasterBloc, MasterState>(
         builder: (_, state) {
           return BottomMenu(
