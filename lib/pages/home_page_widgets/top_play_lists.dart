@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:practica/models/play_list.dart';
+import 'package:practica/pages/play_list_videos_pages.dart';
 import 'package:practica/utils/extras.dart';
 
 class TopPlayLists extends StatefulWidget {
@@ -75,47 +76,60 @@ class _TopPlayListsState extends State<TopPlayLists> {
                           BoxDecoration(color: Colors.white, boxShadow: [
                         BoxShadow(color: Colors.black12, blurRadius: 10),
                       ]),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: CachedNetworkImage(
-                              imageUrl: item.banner,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
+                      child: CupertinoButton(
+                        onPressed: () {
+                          final route = MaterialPageRoute(
+                              builder: (_) => PlayListVideosPage(
+                                    playListId: item.id,
+                                  ));
+                          Navigator.push(context, route);
+                        },
+                        padding: EdgeInsets.zero,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: CachedNetworkImage(
+                                imageUrl: item.banner,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(item.title,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500)),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      Extras.fromNow(item.publishedAt),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(item.title,
                                       style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                    Text(
-                                      "Videos ${item.itemCount}",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500)),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        Extras.fromNow(item.publishedAt),
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                      Text(
+                                        "Videos ${item.itemCount}",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },

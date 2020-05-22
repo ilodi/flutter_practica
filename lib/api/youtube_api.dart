@@ -72,4 +72,32 @@ class YouTubeApi {
       return [];
     }
   }
+
+//PlayListItems
+  Future<List<YouTubeVideo>> getPlayListVideos(String playListId) async {
+    try {
+      final String url = _getUrl('playlistItems', {
+        "part": "snippet",
+        "playlistId": playListId,
+        "key": this.apiKey,
+        "maxResults": "50"
+      });
+      print("URL $url");
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        //1 se convierte el json
+        final parse = jsonDecode(response.body);
+        final List<YouTubeVideo> items = (parse['items'] as List)
+            .map<YouTubeVideo>((item) => YouTubeVideo.fromJson(item, fromPlayList: true))
+            .toList();
+            return items;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
+
 }

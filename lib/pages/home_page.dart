@@ -13,6 +13,7 @@ import 'package:practica/widgets/my_page_view.dart';
 import 'home_page_tabs/pageA_tab.dart';
 import 'home_page_tabs/pageB_tab.dart';
 import 'home_page_tabs/pageC_tab.dart';
+import 'home_page_tabs/pageD_tab.dart';
 
 class HomePage extends StatefulWidget {
   static final routeName = "home";
@@ -31,6 +32,10 @@ class _HomePageState extends State<HomePage> {
         content: PageB(),
         iconPath: 'assets/icons/squirtle.svg',
         label: 'squirtle'),
+    BottomMenuItem(
+        content: PageD(),
+        iconPath: 'assets/icons/pokeball.svg',
+        label: 'Favoritos'),
     BottomMenuItem(
         content: PageC(),
         iconPath: 'assets/icons/charmander.svg',

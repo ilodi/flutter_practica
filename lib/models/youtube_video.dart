@@ -15,12 +15,22 @@ class YouTubeVideo {
 
   }   */
   //forma recomendada
-  factory YouTubeVideo.fromJson(Map<String, dynamic> json) {
+  factory YouTubeVideo.fromJson(Map<String, dynamic> json,
+      {fromPlayList = false}) {
     final snippet = json['snippet'];
     final thumbnail =
         snippet['thumbnails']['standard'] ?? snippet['thumbnails']['high'];
+    String videoId;
+
+    if (!fromPlayList) {
+      videoId = json['contentDetails']['upload']['videoId'];
+    }else{
+      //video desde api playlist items
+      videoId = snippet['resourceId']['videoId'];
+    }
+
     return YouTubeVideo(
-      videoID: json['contentDetails']['upload']['videoId'],
+      videoID: videoId,
       title: snippet['title'],
       description: snippet['description'],
       banner: thumbnail['url'],

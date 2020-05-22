@@ -1,7 +1,14 @@
 import 'dart:async';
-
+import 'package:meta/meta.dart' show required;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+class DialogOption {
+  final String label;
+  final dynamic value;
+
+  DialogOption({@required this.label, @required this.value});
+}
 
 class Dialogs {
   static Future<void> alert(BuildContext context,
@@ -199,5 +206,48 @@ class _InputEmailState extends State<InputEmail> {
         ])
       ]),
     );
+  }
+
+  static Future<bool> select(BuildContext context,
+      {String title,
+      String body,
+      @required List<DialogOption> options,
+      String cancerText = "Cancelar"}) async {
+    final Completer<dynamic> c = Completer();
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          //es como otra pagina y se unsa navigator
+          var options2 = options;
+          return AlertDialog(
+            title: title != null ? Text(title) : null,
+            content: body != null ? Text(body) : null,
+            actions: <Widget>[
+              List.generate(options.length, (index) {
+                final DialogOption option = options[index];
+                return FlatButton(
+                  onPressed: () {},
+                  child: Text(option.label),
+                );
+              }),
+              FlatButton(
+                child: Text(
+                  cancerText,
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w300),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  //despues de mini... saldra
+                  c.complete(null);
+                },
+              ),
+            ],
+          );
+        });
+    return c.future;
   }
 }

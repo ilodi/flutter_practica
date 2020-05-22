@@ -47,7 +47,7 @@ class YouTubeVideoItem extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black12),
+                              color: Colors.black),
                         ),
                         SizedBox(
                           height: 5,
@@ -59,7 +59,7 @@ class YouTubeVideoItem extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w300,
-                                color: Colors.black12),
+                                color: Colors.black87),
                           ),
                         ),
                       ],
